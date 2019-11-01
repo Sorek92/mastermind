@@ -1,2 +1,2 @@
-# mistermind
+# mastermind
 Simple game with colors
