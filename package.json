@@ -1,5 +1,5 @@
 {
-  "name": "gamemas",
+  "name": "gamematermaind",
   "version": "0.0.1",
   "description": "Simple game with colors",
   "main": "app.js",
@@ -18,5 +18,8 @@
   "homepage": "https://github.com/Sorek92/mastermind#readme",
   "dependencies": {
     "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.4"
   }
 }

@@ -1,9 +1,16 @@
-const express = require('express')
-const app = express()
-const port = 3000
+'use strict'
+
+const express = require('express');
+const app = express();
+const path = require('path');
+
+const port = 3000;
+
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 app.get('/', (request, response) => {
-  response.send('Hello from Express!')
+  response.sendFile('/index.html');
 })
 
 app.listen(port, (err) => {
