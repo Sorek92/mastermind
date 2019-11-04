@@ -334,13 +334,28 @@ function events(){
             if(!checkColorsNoEmpty())
             if(isInButtonCheck(pos, buttonCheck)) {
                 var parzystosc = 0;
+                var diffrentPlace = 0;
+                var tt = [];
                 for( var c = 0; c < 4; c++){
-                    if(attemptsColors[c].color === randomColors[c].color){
-                        parzystosc++;
+                    for( var dp = 0; dp < 4; dp++){
+                        if(attemptsColors[c].color === randomColors[dp].color){
+                            if(c === dp)
+                                parzystosc++;
+                            else{
+                                if(!tt.includes(attemptsColors[c].color)){
+                                    tt.push(attemptsColors[c].color);
+                                    diffrentPlace++;
+                                }
+                            }
+                                
+                        }
                     }
+
                 }
                 attempt += 1;
-
+                
+                console.log(diffrentPlace);
+                
                 if(parzystosc < 4 && attempt < 10){
 
                     backgroundAttempt.y += 50;
@@ -370,6 +385,10 @@ function events(){
                         
                         if(t < parzystosc){
                             tipsColors[t].color = "red";
+                            tempLineT.color = tipsColors[t].color;
+                            tipsColors[t].color = "white";
+                        }else if(t >= parzystosc && t < diffrentPlace){
+                            tipsColors[t].color = "yellow";
                             tempLineT.color = tipsColors[t].color;
                             tipsColors[t].color = "white";
                         }else{
