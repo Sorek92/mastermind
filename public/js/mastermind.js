@@ -69,8 +69,8 @@ let backgroundAttempt = new Frame(
 
 // background button check
 let buttonCheck = new Frame(
-    250,
-    770,
+    200,
+    700,
     200,
     50,
     "red"
@@ -98,6 +98,7 @@ let tipsColors = [];
 
 // tablica 
 let tab = [];
+let tab2 = [];
 
 /* ============================FUNCTIONS================================ */
 function start(){
@@ -216,6 +217,17 @@ function tips(){
     return tempTips;
 }
 
+function checkColorsNoEmpty(){
+    let isEmpty = false;
+    for( var x = 0; x < 4; x++){
+        if(attemptsColors[x].color === "white"){
+            alert("wypelnij");
+            return true;
+        }
+    }
+    
+}
+
                             /* Collisions mouse */
 // is in circle
 function isInCircle(point, circle) {
@@ -285,6 +297,18 @@ function draw(){
         x.draw();
 
     });
+
+    //if(attempt>1)
+    tab2.forEach(e => {
+        //console.log(e);
+        let x =  new Wheel();
+        x.setPosX(e.x);
+        x.setPosY(e.y);
+        x.setColor(e.color);
+        x.setRadius(10);
+        x.draw();
+
+    });
     
     
     // button check 
@@ -305,11 +329,13 @@ function events(){
         }
 
         
-        if(pos.y > 750){
-            if (isInButtonCheck(pos, buttonCheck)) {
+        if(pos.y >= 700){
+            
+            if(!checkColorsNoEmpty())
+            if(isInButtonCheck(pos, buttonCheck)) {
                 var parzystosc = 0;
-                for( var i=0; i<4; i++){
-                    if(attemptsColors[i].color === randomColors[i].color){
+                for( var c = 0; c < 4; c++){
+                    if(attemptsColors[c].color === randomColors[c].color){
                         parzystosc++;
                     }
                 }
@@ -323,28 +349,44 @@ function events(){
                         x: 0,y: 0,color: ""
                     };
 
-                    for( var a=0; a< 4; a++){
-                        tempLine.x = attemptsColors[a].x;
-                        tempLine.y = attemptsColors[a].y;
-                        tempLine.color = attemptsColors[a].color;
+                    for( var tcl = 0; tcl < 4; tcl++){
+                        tempLine.x = attemptsColors[tcl].x;
+                        tempLine.y = attemptsColors[tcl].y;
+                        tempLine.color = attemptsColors[tcl].color;
                         
-                        pushColor(tempLine);
+                        pushColorA(tempLine);
 
-                        attemptsColors[a].y += 50;
-                        attemptsColors[a].color = "white";
+                        attemptsColors[tcl].y += 50;
+                        attemptsColors[tcl].color = "white";
                         
                     }
 
-                    
+                    // 
+                    let tempLineT = {
+                        x: 0,y: 0,color: ""
+                    };
 
-                    
+                    for( var t = 0; t < 4; t++){
+                        
+                        if(t < parzystosc){
+                            tipsColors[t].color = "red";
+                            tempLineT.color = tipsColors[t].color;
+                            tipsColors[t].color = "white";
+                        }else{
+                            tipsColors[t].color = "white";
+                            tempLineT.color = tipsColors[t].color;
+                        }
 
-                    // te same miejsca parzystosc
-                    for( var t = 0; t < parzystosc; t++){
-                        tipsColors[t].color = "red";
+                        tempLineT.x = tipsColors[t].x;
+                        tempLineT.y = tipsColors[t].y;
+
+                        
+
+                        pushColorT(tempLineT);
+                        tipsColors[t].y += 50;
                     }
 
-
+                    backgroundAttemptTip.y += 50;
                 }else if(attempt === 10){
                     console.log("wou lose")
                 }else{
@@ -354,7 +396,7 @@ function events(){
     
             
         }else {
-            for( var i=0; i< 4; i++){
+            for( var i = 0; i < 4; i++){
                 if (isInCircle(pos, attemptsColors[i])) {
                     attemptsColors[i].changeColor();
                 }
@@ -373,13 +415,23 @@ function events(){
 
 //
 
-function pushColor(c){
+function pushColorA(c){
     tab.push({
         x:c.x,
         y: c.y,
         color: c.color
     });
 }
+
+function pushColorT(c){
+    tab2.push({
+        x: c.x,
+        y: c.y,
+        color: c.color
+    });
+    //console.log(c);
+}
+/* 
 /* ============================MAIN LOOP================================ */
 function loop(){
     draw();

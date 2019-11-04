@@ -26,11 +26,11 @@ const bigCircleRadius = 20;
 
 // romiar tła wybieranych kolorów
 const choosesColorsBackgroundWidth = 230;
-const choosesColorsBackgroundHeight = 600;
+const choosesColorsBackgroundHeight = 500;
 
 // rozmiar tła podpowiedzi
 const tipsBackgroundWidth = 230;
-const tipsBackgroundHeight = 600;
+const tipsBackgroundHeight = 500;
 
 // rozmiar pojedynczych linii podpowiedzi
 const tipsLineBackgoundWidth = 230;
