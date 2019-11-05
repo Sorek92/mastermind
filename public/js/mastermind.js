@@ -100,6 +100,8 @@ let tipsColors = [];
 let tab = [];
 let tab2 = [];
 
+let win=false;
+
 /* ============================FUNCTIONS================================ */
 function start(){
 
@@ -217,8 +219,8 @@ function tips(){
     return tempTips;
 }
 
+//
 function checkColorsNoEmpty(){
-    let isEmpty = false;
     for( var x = 0; x < 4; x++){
         if(attemptsColors[x].color === "white"){
             alert("wypelnij");
@@ -256,7 +258,7 @@ function draw(){
     backgroundRandomColors.draw();
     ctx.fillStyle = "lightblue";
     ctx.font = '16px serif';
-    ctx.fillText("Znajdź kolory poniżej", marginLeft, padding + titleBackgroundHeight, titleBackgroundWith - titleBackgroundHeight);
+    //ctx.fillText("Znajdź kolory poniżej", marginLeft, padding + titleBackgroundHeight, titleBackgroundWith - titleBackgroundHeight);
     
     // draw background of chooses colors
     backgroundChoosesColors.draw();
@@ -268,10 +270,12 @@ function draw(){
     //buttonInfo.draw();
 
     // paint random colors
-    randomColors[0].draw();
-    randomColors[1].draw();
-    randomColors[2].draw();
-    randomColors[3].draw();
+    //if(win){
+        randomColors[0].draw();
+        randomColors[1].draw();
+        randomColors[2].draw();
+        randomColors[3].draw();
+    //}
 
     // attempt
     backgroundAttempt.draw();
@@ -317,6 +321,17 @@ function draw(){
 
 
 }
+// sprawdz czy zawiera
+function checkExist(table, item){
+    var r = false;
+    for( var i = 0; i< table.length; i++){
+        alert( "i: "+ item + " - " + table[i]);
+        if(item === table[i])
+        r = true;
+    }
+    return r;
+}
+
 
 // main update function
 function events(){
@@ -336,25 +351,32 @@ function events(){
                 var parzystosc = 0;
                 var diffrentPlace = 0;
                 var tt = [];
-                for( var c = 0; c < 4; c++){
-                    for( var dp = 0; dp < 4; dp++){
-                        if(attemptsColors[c].color === randomColors[dp].color){
-                            if(c === dp)
+                let tempA = attemptsColors;
+                let tempR = randomColors;
+                for( var r = 0; r < 4; r++){
+                    for( var c = 0; c < 4; c++){
+                        //alert("PETLA NUMER: r: " + r + " c: "+ c);
+                        //alert("attempt: " + tempA[c].color + " random: " + tempR[r].color);
+                        if(tempA[c].color === tempR[r].color){
+                            if(c === r){
+                                tt.push(tempA[c].color);
                                 parzystosc++;
-                            else{
-                                if(!tt.includes(attemptsColors[c].color)){
-                                    tt.push(attemptsColors[c].color);
+                            }else{
+                                if(!checkExist(tt, tempA[c].color)){
+                                    alert(checkExist(tt, tempA[c].color));
+                                    tt.push(tempA[c].color);
                                     diffrentPlace++;
                                 }
                             }
-                                
+
                         }
+                        //alert("check " + tt + " p:"+ parzystosc + " d:"+ diffrentPlace);
                     }
 
                 }
                 attempt += 1;
                 
-                console.log(diffrentPlace);
+                //console.log(diffrentPlace);
                 
                 if(parzystosc < 4 && attempt < 10){
 
@@ -365,14 +387,14 @@ function events(){
                     };
 
                     for( var tcl = 0; tcl < 4; tcl++){
-                        tempLine.x = attemptsColors[tcl].x;
-                        tempLine.y = attemptsColors[tcl].y;
-                        tempLine.color = attemptsColors[tcl].color;
+                        tempLine.x = tempA[tcl].x;
+                        tempLine.y = tempA[tcl].y;
+                        tempLine.color = tempA[tcl].color;
                         
                         pushColorA(tempLine);
 
-                        attemptsColors[tcl].y += 50;
-                        attemptsColors[tcl].color = "white";
+                        tempA[tcl].y += 50;
+                        tempA[tcl].color = "white";
                         
                     }
 
@@ -383,18 +405,30 @@ function events(){
 
                     for( var t = 0; t < 4; t++){
                         
-                        if(t < parzystosc){
-                            tipsColors[t].color = "red";
-                            tempLineT.color = tipsColors[t].color;
-                            tipsColors[t].color = "white";
-                        }else if(t >= parzystosc && t < diffrentPlace){
-                            tipsColors[t].color = "yellow";
-                            tempLineT.color = tipsColors[t].color;
-                            tipsColors[t].color = "white";
+                        if(t < parzystosc) {
+                            //tipsColors[t].color = "red";
+                            tempLineT.color = "red";
+                            //tipsColors[t].color = "white";
+                        }else if(t >= parzystosc && t < parzystosc + diffrentPlace){
+                            //tipsColors[t].color = "yellow";
+                            tempLineT.color = "yellow";
+                             //tipsColors[t].color = "white";
                         }else{
-                            tipsColors[t].color = "white";
-                            tempLineT.color = tipsColors[t].color;
+                            tempLineT.color = "gray";
                         }
+
+                        // if(t < parzystosc){
+                        //     tipsColors[t].color = "red";
+                        //     tempLineT.color = tipsColors[t].color;
+                        //     tipsColors[t].color = "white";
+                        // }else if(t >= parzystosc && t < diffrentPlace){
+                        //     tipsColors[t].color = "yellow";
+                        //     tempLineT.color = tipsColors[t].color;
+                        //     tipsColors[t].color = "white";
+                        // }else{
+                        //     tipsColors[t].color = "white";
+                        //     tempLineT.color = tipsColors[t].color;
+                        // }
 
                         tempLineT.x = tipsColors[t].x;
                         tempLineT.y = tipsColors[t].y;
@@ -410,6 +444,8 @@ function events(){
                     console.log("wou lose")
                 }else{
                     console.log("wou winn");
+                    win = true;
+                    
                 }
             }
     
