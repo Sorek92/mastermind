@@ -351,32 +351,36 @@ function events(){
                 var parzystosc = 0;
                 var diffrentPlace = 0;
                 var tt = [];
-                let tempA = attemptsColors;
-                let tempR = randomColors;
+                let tempA = attemptsColors.slice();
+                let tempR = randomColors.slice();
                 for( var r = 0; r < 4; r++){
-                    for( var c = 0; c < 4; c++){
-                        //alert("PETLA NUMER: r: " + r + " c: "+ c);
-                        //alert("attempt: " + tempA[c].color + " random: " + tempR[r].color);
-                        if(tempA[c].color === tempR[r].color){
-                            if(c === r){
-                                tt.push(tempA[c].color);
-                                parzystosc++;
-                            }else{
-                                if(!checkExist(tt, tempA[c].color)){
-                                    alert(checkExist(tt, tempA[c].color));
-                                    tt.push(tempA[c].color);
-                                    diffrentPlace++;
-                                }
-                            }
-
-                        }
-                        //alert("check " + tt + " p:"+ parzystosc + " d:"+ diffrentPlace);
+                    console.log(tempA);
+                    tempA[r].color = "purple";
+                    tempA[r].x = 20;
+                    console.log("t: " + tempA[r].color + " x: " + tempA[t].x);
+                    console.log("t: " + attemptsColors[r].color + " x: " + attemptsColors[t].x);
+                    if(tempA[r].color === tempR[r].color){
+                        parzystosc++;
+                        tempA[r] = "black";
+                        tempR[r] = "black";
                     }
 
                 }
+                for ( var r = 0; r < 4; r++){
+                    for( var c = 0; c < 4; c++){
+                        //alert("PETLA NUMER: r: " + r + " c: "+ c);
+                        //alert("attempt: " + tempA[c].color + " random: " + tempR[r].color);
+                        if(tempA[c] === tempR[r]){
+                                
+                            diffrentPlace++;
+    
+                        }
+                        //alert("check " + tt + " p:"+ parzystosc + " d:"+ diffrentPlace);
+                    }
+                }
                 attempt += 1;
                 
-                //console.log(diffrentPlace);
+                console.log("d: "+diffrentPlace+ " p: "+ parzystosc);
                 
                 if(parzystosc < 4 && attempt < 10){
 
