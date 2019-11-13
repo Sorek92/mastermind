@@ -1,5 +1,6 @@
 'use strict'
 
+
 // get element canvas from html
 const canvas = document.querySelector('canvas');
 
@@ -86,21 +87,7 @@ let buttonInfo = new Frame(
 )
 
 
-// random colors
-let randomColors = [];
 
-// attempts
-let attempt = 0;
-let attemptsColors = [];
-
-// tips
-let tipsColors = [];
-
-// tablica 
-let tab = [];
-let tab2 = [];
-
-let win=false;
 
 /* ============================FUNCTIONS================================ */
 function start(){
@@ -125,15 +112,7 @@ function start(){
     
     
 
-    // rand colors
-    randomColors =  drawColors();
-
-    // 
-    attemptsColors =  attempts();
-
-    // tips 
-    tipsColors = tips();
-
+    
     // button play on the end
     canvas.addEventListener("click", function(e){
         
@@ -141,6 +120,24 @@ function start(){
             if((e.offsetX >= buttonPlay.x && e.offsetX <= buttonPlay.x + buttonPlay.w) 
             && (e.offsetY >= buttonPlay.y && e.offsetY <= buttonPlay.y + buttonPlay.h)){
                 console.log("Button Play : " + e.offsetX + " -- " + e.offsetY);
+
+                // randoms colors  
+                randomTextColors = randColors();
+                //console.log(randomTextColors);
+
+                //
+                attemptTextColors = tempAcolors();
+
+                // set randoms circle colors
+                randomColors =  setRandomColors();
+
+                // set colors for change 
+                attemptsColors =  setAttemptCircles();
+
+                // set tips 
+                tipsColors = setTipsCircles();
+
+
                 buttonPlay = undefined;
                 loop();
             }
@@ -150,16 +147,36 @@ function start(){
     })
 }
 
-// rand a colors
-function drawColors(){
+// random Text Colors - draw a random colors from all colors
+function randColors(){
+    let tempColors = [];
+    for( var i = 0; i < quantityColors; i++){
+        tempColors[i] = allColors[Math.floor(Math.random()*4)];
+    }
+
+    return tempColors;
+}
+
+// temporary colors of attemp circle
+function tempAcolors(){
+    let temp = [];
+    for( var i = 0; i < quantityColors; i++){
+        temp[i] = "white";
+    }
+
+    return temp;
+}
+
+// set random colors
+function setRandomColors(){
     
     let colors = [];
     let posx = marginLeft + bigCircleRadius + marginCircle + 15;
     let posy = 2 * padding + titleBackgroundHeight + bigCircleRadius + marginCircle;
 
-    for( let i = 0; i < 4; i++){
+    for( let i = 0; i < quantityColors; i++){
         colors[i] = new Wheel();
-        colors[i].setColor(colors[i].randColor());
+        colors[i].setColor(randomTextColors[i]);
 
         // set radius
         colors[i].setRadius(20);
@@ -172,17 +189,16 @@ function drawColors(){
     }
 
     return colors;
-
 }
 
-// attempt
-function attempts(){
+// set attempt colors
+function setAttemptCircles(){
 
     let tempColor = [];
     let posx = marginLeft + bigCircleRadius + marginCircle + 15;
     let posy = backgroundAttempt.y + 25;
 
-    for( var i=0; i<4;i++){
+    for( var i = 0; i < quantityColors; i++){
 
         tempColor[i] = new Wheel();
         
@@ -197,14 +213,14 @@ function attempts(){
     return tempColor;
 }
 
-// tips
-function tips(){
+// set tips
+function setTipsCircles(){
     let tempTips = [];
 
     let posx = marginLeft + choosesColorsBackgroundWidth + 2 * padding + 40;
     let posy = 3 * padding + titleBackgroundHeight + drawnColorsBackgroundHeight + 25;
 
-    for( var i=0; i<4;i++){
+    for( var i = 0; i < quantityColors; i++){
 
         tempTips[i] = new Wheel();
         
@@ -214,7 +230,6 @@ function tips(){
         posx += 50;
          
     }
-
 
     return tempTips;
 }
@@ -228,6 +243,15 @@ function checkColorsNoEmpty(){
         }
     }
     
+}
+
+// painting circles
+function paintCircles(circles){
+
+    for(var i = 0; i < circles.length; i++){
+        circles[i].draw();
+    }
+
 }
 
                             /* Collisions mouse */
@@ -271,25 +295,16 @@ function draw(){
 
     // paint random colors
     //if(win){
-        randomColors[0].draw();
-        randomColors[1].draw();
-        randomColors[2].draw();
-        randomColors[3].draw();
+        paintCircles(randomColors);
     //}
 
     // attempt
     backgroundAttempt.draw();
-    attemptsColors[0].draw();
-    attemptsColors[1].draw();
-    attemptsColors[2].draw();
-    attemptsColors[3].draw();
+    paintCircles(attemptsColors);
 
     // tips
     backgroundAttemptTip.draw();
-    tipsColors[0].draw();
-    tipsColors[1].draw();
-    tipsColors[2].draw();
-    tipsColors[3].draw();
+    paintCircles(tipsColors);
 
     tab.forEach(e => {
         //console.log(e);
@@ -321,15 +336,42 @@ function draw(){
 
 
 }
-// sprawdz czy zawiera
-function checkExist(table, item){
-    var r = false;
-    for( var i = 0; i< table.length; i++){
-        alert( "i: "+ item + " - " + table[i]);
-        if(item === table[i])
-        r = true;
+
+// check circles 
+function checkCircles(random, attempt){
+
+    let textCheck = [];
+    
+    for(var r = 0; r < quantityColors; r++){
+        if(attempt[r] === random[r] && random[r] !== 'X' && random[r] !== 'X'){
+            attempt[r] = 'X';
+            random[r] = 'X';
+            textCheck.push("X");
+        }
     }
-    return r;
+
+    for(var c = 0; c < quantityColors; c++){
+        for(var r = 0; r< quantityColors; r++){
+            
+            if(attempt[r] === random[c] && attempt[r] !== 'X' && random[c] !== 'X' && attempt[r] !== 'O' && random[c] !== 'O'){
+                random[c] = "O"
+                attempt[r] = "O";
+                textCheck.push("O")
+            }
+        }
+    }
+
+
+console.log("random array :");
+console.log(random)
+console.log("checking array");
+console.log(attempt)
+
+console.log("checking text")
+console.log(textCheck)
+
+    return textCheck;
+
 }
 
 
@@ -348,116 +390,35 @@ function events(){
             
             if(!checkColorsNoEmpty())
             if(isInButtonCheck(pos, buttonCheck)) {
-                var parzystosc = 0;
-                var diffrentPlace = 0;
-                var tt = [];
-                let tempA = attemptsColors.slice();
-                let tempR = randomColors.slice();
-                for( var r = 0; r < 4; r++){
-                    console.log(tempA);
-                    tempA[r].color = "purple";
-                    tempA[r].x = 20;
-                    console.log("t: " + tempA[r].color + " x: " + tempA[t].x);
-                    console.log("t: " + attemptsColors[r].color + " x: " + attemptsColors[t].x);
-                    if(tempA[r].color === tempR[r].color){
-                        parzystosc++;
-                        tempA[r] = "black";
-                        tempR[r] = "black";
-                    }
+
+                let r = randomTextColors.slice();
+                let a = attemptTextColors.slice();
+
+                tipsText = checkCircles(r,a);
+                for( var i = 0; i < quantityColors; i++){
+                    if(tipsText[i] === "X")
+                        tipsColors[i].setColor("black")
+                        else
+                    if(tipsText[i] === "O")
+                        tipsColors[i].setColor("white")
+                        else
+                        tipsColors[i].setColor("gray")
 
                 }
-                for ( var r = 0; r < 4; r++){
-                    for( var c = 0; c < 4; c++){
-                        //alert("PETLA NUMER: r: " + r + " c: "+ c);
-                        //alert("attempt: " + tempA[c].color + " random: " + tempR[r].color);
-                        if(tempA[c] === tempR[r]){
-                                
-                            diffrentPlace++;
-    
-                        }
-                        //alert("check " + tt + " p:"+ parzystosc + " d:"+ diffrentPlace);
-                    }
-                }
-                attempt += 1;
-                
-                console.log("d: "+diffrentPlace+ " p: "+ parzystosc);
-                
-                if(parzystosc < 4 && attempt < 10){
 
-                    backgroundAttempt.y += 50;
+                console.log(randomTextColors);
+                console.log(attemptTextColors);
 
-                    let tempLine = {
-                        x: 0,y: 0,color: ""
-                    };
 
-                    for( var tcl = 0; tcl < 4; tcl++){
-                        tempLine.x = tempA[tcl].x;
-                        tempLine.y = tempA[tcl].y;
-                        tempLine.color = tempA[tcl].color;
-                        
-                        pushColorA(tempLine);
-
-                        tempA[tcl].y += 50;
-                        tempA[tcl].color = "white";
-                        
-                    }
-
-                    // 
-                    let tempLineT = {
-                        x: 0,y: 0,color: ""
-                    };
-
-                    for( var t = 0; t < 4; t++){
-                        
-                        if(t < parzystosc) {
-                            //tipsColors[t].color = "red";
-                            tempLineT.color = "red";
-                            //tipsColors[t].color = "white";
-                        }else if(t >= parzystosc && t < parzystosc + diffrentPlace){
-                            //tipsColors[t].color = "yellow";
-                            tempLineT.color = "yellow";
-                             //tipsColors[t].color = "white";
-                        }else{
-                            tempLineT.color = "gray";
-                        }
-
-                        // if(t < parzystosc){
-                        //     tipsColors[t].color = "red";
-                        //     tempLineT.color = tipsColors[t].color;
-                        //     tipsColors[t].color = "white";
-                        // }else if(t >= parzystosc && t < diffrentPlace){
-                        //     tipsColors[t].color = "yellow";
-                        //     tempLineT.color = tipsColors[t].color;
-                        //     tipsColors[t].color = "white";
-                        // }else{
-                        //     tipsColors[t].color = "white";
-                        //     tempLineT.color = tipsColors[t].color;
-                        // }
-
-                        tempLineT.x = tipsColors[t].x;
-                        tempLineT.y = tipsColors[t].y;
-
-                        
-
-                        pushColorT(tempLineT);
-                        tipsColors[t].y += 50;
-                    }
-
-                    backgroundAttemptTip.y += 50;
-                }else if(attempt === 10){
-                    console.log("wou lose")
-                }else{
-                    console.log("wou winn");
-                    win = true;
-                    
-                }
             }
     
             
         }else {
-            for( var i = 0; i < 4; i++){
+            for( var i = 0; i < quantityColors; i++){
                 if (isInCircle(pos, attemptsColors[i])) {
                     attemptsColors[i].changeColor();
+                    attemptTextColors[i] = attemptsColors[i].color;
+                    console.log(attemptTextColors[i]);
                 }
             }
         }
@@ -465,31 +426,13 @@ function events(){
 
 
 
-
     });
 
 
 
 }
 
-//
 
-function pushColorA(c){
-    tab.push({
-        x:c.x,
-        y: c.y,
-        color: c.color
-    });
-}
-
-function pushColorT(c){
-    tab2.push({
-        x: c.x,
-        y: c.y,
-        color: c.color
-    });
-    //console.log(c);
-}
 /* 
 /* ============================MAIN LOOP================================ */
 function loop(){
