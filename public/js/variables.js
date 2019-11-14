@@ -1,61 +1,67 @@
 'use strict'
 
+const scala = 1;
+
+
 // rozmiar tła
-const cw = 600;
-const ch = 800;
+const cw = 600 * scala;
+const ch = 800 * scala;
+
+
+// button play frame
+const buttPlayFrameWidth = 200 * scala;
+const buttPlayFrameHeight = 50 * scala;
 
 // marginesy
-const marginTop = 50;
-const marginBottom = 50;
-const marginLeft = 50;
-const marginRight = 50;
+const marginTop = 50 * scala;
+const marginBottom = 50 * scala;
+const marginLeft = 50 * scala;
+const marginRight = 50 * scala;
 
 // padding
-const padding = 20;
+const padding = 20 * scala;
 
 // rozmiar tła tytułu
-const titleBackgroundWith = 200;
-const titleBackgroundHeight = 60;
-
+const titleBackgroundWith = 200 * scala;
+const titleBackgroundHeight = 60 * scala;
 
 // rozmiar tła wyslosowanych kolorów , takie same do wybieranych kolorow
-const drawnColorsBackgroundWidth = 230;
-const drawnColorsBackgroundHeight = 50;
+const drawnColorsBackgroundWidth = 230 * scala;
+const drawnColorsBackgroundHeight = 50 * scala;
 
 // margines kolek
-const marginCircle = 5;
-const bigCircleRadius = 20;
+const marginCircle = 5 * scala;
+const bigCircleRadius = 20 * scala;
+const smallCircleRadius = 10 * scala;
 
 // romiar tła wybieranych kolorów
-const choosesColorsBackgroundWidth = 230;
-const choosesColorsBackgroundHeight = 500;
+const choosesColorsBackgroundWidth = 230 * scala;
+const choosesColorsBackgroundHeight = 500 * scala;
 
 // rozmiar tła podpowiedzi
-const tipsBackgroundWidth = 230;
-const tipsBackgroundHeight = 500;
+const tipsBackgroundWidth = 230 * scala;
+const tipsBackgroundHeight = 500 * scala;
 
 // rozmiar pojedynczych linii podpowiedzi
-const tipsLineBackgoundWidth = 230;
-const tipsLineBackgoundHeight = 30;
-const marginTips = 15;
+const tipsLineBackgoundWidth = 230 * scala;
+const tipsLineBackgoundHeight = 30 * scala;
+const marginTips = 15 * scala;
 
-// stats of game 
-var stats = 0;
-
-// random colors
+// random colors all objects
 let randomColors = [];
 
-// attempts
+// attempts all objects
 let attempt = 0;
 let attemptsColors = [];
 
-// tips
+// tips all objects
 let tipsColors = [];
 
 // tablica 
 let tab = [];
 let tab2 = [];
 
+// when win
 let win=false;
 
 
@@ -74,3 +80,4 @@ let randomTextColors = [];
 let attemptTextColors = [];
 
 let tipsText = [];
+
