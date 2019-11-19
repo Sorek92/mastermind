@@ -140,6 +140,7 @@ function start(){
 
 
                 buttonPlay = undefined;
+                events();
                 loop();
             }
         }
@@ -295,9 +296,9 @@ function draw(){
     //buttonInfo.draw();
 
     // paint random colors
-    //if(win){
+    if(win){
         paintCircles(randomColors);
-    //}
+    }
 
     // attempt
     backgroundAttempt.draw();
@@ -362,7 +363,7 @@ function checkCircles(random, attempt){
         }
     }
 
-
+    
 console.log("random array :");
 console.log(random)
 console.log("checking array");
@@ -447,9 +448,12 @@ function events(){
                 let a = attemptTextColors.slice();
 
                 tipsText = checkCircles(r,a);
+                var w = 0;
                 for( var i = 0; i < quantityColors; i++){
-                    if(tipsText[i] === "X")
+                    if(tipsText[i] === "X"){
                         tipsColors[i].setColor("black")
+                        w++;
+                    }
                         else
                     if(tipsText[i] === "O")
                         tipsColors[i].setColor("white")
@@ -458,6 +462,8 @@ function events(){
 
                 }
 
+                 if(w === 4)
+                 win = true;
                 //console.log(randomTextColors);
                 //console.log(attemptTextColors);
 
@@ -465,6 +471,7 @@ function events(){
 
                 backgroundAttemptTip.y += 50;
                 backgroundAttempt.y += 50;
+                attempt++;
                 
             }
     
