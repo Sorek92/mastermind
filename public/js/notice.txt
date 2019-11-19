@@ -1,0 +1,8 @@
+notatki 
+
+1. zrobic klase Frame
+2. Zrobić klase Wheel
+3. dodac metode addEvent
+4. dodac metode update 
+5. chyba zaczne ladnie od poczatku 
+6. 

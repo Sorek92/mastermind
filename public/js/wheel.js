@@ -29,6 +29,7 @@ function Wheel(){
     this.changeColor = changeColor;
     this.draw = draw;
     this.randColor = randColor;
+  
    
 
     // get current color
@@ -116,5 +117,7 @@ function Wheel(){
     function randColor(){
         return colors[Math.floor(Math.random()*4)];
     }
+
+    
 
 }

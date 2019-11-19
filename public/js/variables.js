@@ -1,5 +1,9 @@
 'use strict'
 
+// state game default 0
+
+let state = 0;
+
 const scala = 1;
 
 

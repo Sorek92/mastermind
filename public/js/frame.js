@@ -9,6 +9,8 @@ function Frame( x, y, w, h, c){
     this.h = h;
     this.color = c;
 
+    this.makeEvent = makeEvent;
+
     // methods
     this.get = get;
     this.draw = draw;
@@ -22,5 +24,21 @@ function Frame( x, y, w, h, c){
     function draw(){
         ctx.fillStyle = this.color;
         ctx.fillRect( this.x, this.y, this.w, this.h);
+    }
+
+    function makeEvent(){
+
+        canvas.addEventListener("click", allla);
+    }
+
+    function allla(e){
+
+        const pos = {
+            x: e.offsetX,
+            y: e.offsetY
+        }
+        if((pos.x >= x  && pos.x <= x + w) && (pos.y >= y && pos.y <= y + h))
+            console.log( " nacisnieto tu " + c);
+
     }
 }

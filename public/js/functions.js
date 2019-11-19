@@ -141,7 +141,8 @@ function start(){
 
                 buttonPlay = undefined;
                 events();
-                loop();
+                draw();
+                //loop();
             }
         }
         
