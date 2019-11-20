@@ -5,4 +5,5 @@ notatki
 3. dodac metode addEvent
 4. dodac metode update 
 5. chyba zaczne ladnie od poczatku 
-6. 
+6. oddzielne canvasy na tło i inne elementy
+7. 
