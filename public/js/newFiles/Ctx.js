@@ -1,7 +1,8 @@
 'use strict'
 
 // Class ctx
-import { cw, ch } from "./boot.js";
+const cw = 600;
+const ch = 800;
 
 export default class Ctx { 
 
