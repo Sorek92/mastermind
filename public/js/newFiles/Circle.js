@@ -7,9 +7,9 @@ import Ctx from "./Ctx.js";
 export default class Circle extends Ctx{
 
     // 
-    constructor(x, y, radius, color, handle){
+    constructor(x, y, radius, color){
 
-        super(handle);
+        super();
         this._x = x;
         this._y = y;
         this._radius = radius;
@@ -23,5 +23,9 @@ export default class Circle extends Ctx{
         this.ctx.fill();
         this.ctx.stroke();
     }
-
+    
+    // random color
+    randomColor(){
+        this._color = "#"+ Math.floor(Math.random()*10) + ""+Math.floor(Math.random()*10)+""+Math.floor(Math.random()*10);
+    }
 }
