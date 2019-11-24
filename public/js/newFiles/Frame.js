@@ -6,7 +6,7 @@ import Ctx from "./Ctx.js";
 export default class Frame extends Ctx{
 
     // 
-    constructor(x, y, w, h, color){
+    constructor(x, y, w, h, color, bg = false){
 
         super();
         this._x = x;
@@ -14,6 +14,7 @@ export default class Frame extends Ctx{
         this._w = w;
         this._h = h;
         this._color = color;
+        this._bg = bg;
     }
 
     // paint frame
