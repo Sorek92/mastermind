@@ -2,23 +2,22 @@
 
 import Ctx from "./Ctx.js";
 
-// Class Frame
+// Class Button
 export default class Button extends Ctx{
 
     // 
-    constructor(x, y, w, h, color, state){
+    constructor(x, y, w, h, color, f, state){
 
         super();
-        this._button = {
-            click: true,
-            moveIn: false,
-            moveOut: false,
-            isClicked: false,
-            state: state
-        }
 
-        this.addEvent();
+        //this.addEvent();
         
+        this.isActive = true;
+        this.isClick = false;
+        this.state = state;
+        this.func = this.handleFunction(f);
+
+
         this._x = x;
         this._y = y;
         this._w = w;
@@ -26,59 +25,95 @@ export default class Button extends Ctx{
         this._color = color;
     }
 
-    // paint frame
+
+    // paint button on vanvas
     paintButton() {
         this.ctx.beginPath();
-        this.ctx.fillStyle = this.ctx.isPointInPath(this._x+100, this._y) ? "red" : "green";
+        this.ctx.fillStyle = this._color;
         this.ctx.fillRect(this._x, this._y, this._w, this._h, this._color);
         this.ctx.fill();
         
     }
 
-    // return all elements from class
+    // return all element from this class
     takeAll(){
         return this;
     }
 
-    // add event click to frame
-    addEvent(){
+    // handle funtion to this object
+    handleFunction(f){
         
+        switch(f){
+            case "play": 
+                return this.play();
+                //break;
+            case "check": 
+                return this.check(); 
+                //break;
+            default: 
+                return 0;
+        }
+    };
+
+    // change values
+    changeFieldsValue(param){
+        this.isClick = param;
+        this.isActive = false;
+    }
+
+    // function play
+    play(){
         let d = this.takeAll();
 
-        // for click mouse in it
-        if(this._button.click){
+        this.canvas.addEventListener('click', d.playEvent(d));
+        
+    }
 
-            this._button.isClicked = this.canvas.addEventListener('click', klik);
-            if(this._button.isClicked){
-                this._color = "black";
-            }
-        }
-        function klik(e){
+    // event for play
+    playEvent(d){
 
+        return function(e){
             e.preventDefault();
             e.stopPropagation();
             const pos = {
                 x: e.offsetX,
                 y: e.offsetY
             }
-
-            let toReturn = false;
-
-
-            if((pos.x >= d._x  && pos.x <= d._x + d._w) && (pos.y >= d._y && pos.y <= d._y + d._h))
-            {
-                toReturn = true;
-                console.log("giut");
+            if(d.isActive){
+                if((pos.x >= d._x  && pos.x <= d._x + d._w) && (pos.y >= d._y && pos.y <= d._y + d._h))
+                {
+                    console.log("nacisnieto play")
+                    d.changeFieldsValue(true);
+                
+                }
             }
-            return true;
+
         }
     }
 
 
-    
-
-    // remove event click
-    removeEvent(){
+    // event for check
+    check(){
+        let d = this.takeAll();
+        this.canvas.addEventListener("click", function(e){
+            e.preventDefault();
+            e.stopPropagation();
+            const pos = {
+                x: e.offsetX,
+                y: e.offsetY
+            }
+            if((pos.x >= d._x  && pos.x <= d._x + d._w) && (pos.y >= d._y && pos.y <= d._y + d._h))
+            {
+                d.isClick = true;
+                if(d.isClick){
+                    d._color = "black";
+                }
+                console.log("haha");
+            }
+        })
 
     }
+
+
+
 }

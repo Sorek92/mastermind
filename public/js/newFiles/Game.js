@@ -112,6 +112,7 @@ export class Game extends Frame{
                 play_width,
                 play_height,
                 "blue",
+                "play",
                 1
             ),
             check: new Button(
@@ -120,14 +121,8 @@ export class Game extends Frame{
                 check_width, 
                 check_height, 
                 "purple",
+                "check",
                 2
-            ),
-            check2: new Button(
-                200, 
-                750, 
-                200, 
-                50, 
-                "grey"
             )
         }
     
