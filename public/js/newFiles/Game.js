@@ -1,7 +1,7 @@
 'use strict'
 
 import Frame from "./Frame.js";
-import Button from "./Button.js";
+import RectButton from "./RectButton.js";
 
 // constans 
 
@@ -38,95 +38,137 @@ const margin_bottom = 50;
 const margin_left = 50;
 const margin_right = 50;
 
+
+
 const padding = 20
+
+let jsonObjects = {
+
+    Buttons: {
+        Play: {
+            name: "PLAY",
+            x: cw_bg / 2 - play_width / 2,
+            y: ch_bg / 2 - play_height / 2,
+            w: play_width,
+            h: play_height,
+            colorB: "blue",
+            colorT: "yellow", 
+            text: "Play"
+        },
+        Check: {
+            name: "CHECK",
+            x: cw_bg / 2 - check_width / 2, 
+            y: ch_bg - check_height, 
+            w: check_width, 
+            h: check_height, 
+            colorB: "red",
+            colorT: "purple", 
+            text: "check"
+        }
+    },
+
+    Frames: {
+        "Screen": {
+            x: 0,
+            y: 0,
+            w: cw_bg,
+            h: ch_bg,
+            color: "brown"
+        },
+        Title: {
+            x: cw_bg / 2 - title_bg_width / 2, 
+            y: margin_top - title_bg_height / 2, 
+            w: title_bg_width, 
+            h: tip_bg_height, 
+            color: "lightgray"
+        },
+        Random: {
+            x: margin_left, 
+            y: 2 * padding + tip_bg_height, 
+            w: random_bg_width, 
+            h: random_bg_height, 
+            color: "blue"
+        },
+        Attempts: {
+            x: margin_left, 
+            y: 3 * padding + title_bg_height + random_bg_height, 
+            w: chooses_bg_width, 
+            h: chooses_bg_height, 
+            color: "white"
+        },
+        Attempt: {
+            x: margin_left, 
+            y: 3 * padding + title_bg_height + random_bg_height, 
+            w: chooses_bg_width, 
+            h: chooses_bg_height / 10, 
+            color: "yellow"
+        },
+        Tips: {
+            x: margin_left + chooses_bg_width + 2 * padding, 
+            y: 3 * padding + title_bg_height + random_bg_height, 
+            w: tips_bg_width, 
+            h: tips_bg_height, 
+            color: "white"
+        },
+        Tip: {
+            x: margin_left + random_bg_width + 2 * padding, 
+            y: 3 * padding + title_bg_height + random_bg_height, 
+            w: tips_bg_width, 
+            h: tips_bg_height / 10, 
+            color: "green"
+        }
+    }
+
+
+
+}
+
 
 export class Game extends Frame{
 
     constructor(){
         super();
         this.state = 0;
+        this._attempt = 1;
 
-        this.bgFrames = this.loadFrames();
-        this.bgButtons = this.loadButtons();
+        this._buttons = [];
+        this._frames = [];
+        
     }
 
-    loadFrames() {
+    // create button
+    createButton(name){
 
-        let bgFrames = {
-            screen: new Frame(0,0, cw_bg, ch_bg,"brown",false),
-            title: new Frame(
-                cw_bg / 2 - title_bg_width / 2, 
-                margin_top - title_bg_height / 2, 
-                title_bg_width, 
-                tip_bg_height, 
-                "lightgray"
-            ),
-            random: new Frame(
-                margin_left, 
-                2 * padding + tip_bg_height, 
-                random_bg_width, 
-                random_bg_height, 
-                "blue"
-            ),
-            attempts: new Frame(
-                margin_left, 
-                3 * padding + title_bg_height + random_bg_height, 
-                chooses_bg_width, 
-                chooses_bg_height, 
-                "white"
-            ),
-            attempt: new Frame(
-                margin_left, 
-                3 * padding + title_bg_height + random_bg_height, 
-                chooses_bg_width, 
-                chooses_bg_height / 10, 
-                "yellow"
-            ),
-            tips: new Frame(
-                margin_left + chooses_bg_width + 2 * padding, 
-                3 * padding + title_bg_height + random_bg_height, 
-                tips_bg_width, 
-                tips_bg_height, 
-                "white"
-            ),
-            tip: new Frame(
-                margin_left + random_bg_width + 2 * padding, 
-                3 * padding + title_bg_height + random_bg_height, 
-                tips_bg_width, 
-                tips_bg_height / 10, 
-                "green"
-           )
-    
-        }
-    
-        return bgFrames;
-    
+        let B = jsonObjects.Buttons[name];
+
+        // new button 
+        let newButton = new RectButton(B.name, B.x, B.y, B.w, B.h, B.colorB, B.colorT, B.text);
+        
+        console.log(newButton)
+
+        // save to _buttons
+        this._buttons[name] = newButton;
+
+        return newButton;
     }
-    
-    loadButtons(){
-        let bgButtons = {
-    
-            play: new Button(
-                cw_bg / 2 - play_width / 2,
-                ch_bg / 2 - play_height / 2,
-                play_width,
-                play_height,
-                "blue",
-                "play",
-                1
-            ),
-            check: new Button(
-                cw_bg / 2 - check_width / 2, 
-                ch_bg - check_height, 
-                check_width, 
-                check_height, 
-                "purple",
-                "check",
-                2
-            )
-        }
-    
-        return bgButtons;
-    }
+
+
+    // create frame
+    createFrame(name){
+
+        let F = jsonObjects.Frames[name];
+
+        // new bg frames
+        let newFrame = new Frame(F.x, F.y, F.w, F.h, F.color);
+
+        //console.log(newFrame)
+        
+        // save in _frames
+        this._frames[name] = newFrame;
+        
+        return newFrame;
+
+    } 
+
 
 }
