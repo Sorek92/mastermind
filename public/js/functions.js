@@ -106,7 +106,7 @@ function start(){
     ctx.fillText(startText, 
         cw / 2 - ctx.measureText(startText).width / 2, 
         ch / 2 , 
-        100
+        600
         );
 
     
