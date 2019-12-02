@@ -2,6 +2,7 @@
 
 import Frame from "./Frame.js";
 import RectButton from "./RectButton.js";
+import CircleButton from "./CircleButton.js";
 
 // constans 
 
@@ -37,6 +38,9 @@ const margin_top = 50;
 const margin_bottom = 50;
 const margin_left = 50;
 const margin_right = 50;
+
+const margin_circle = 20;
+const circle_radius = 20;
 
 
 
@@ -117,6 +121,24 @@ let jsonObjects = {
             h: tips_bg_height / 10, 
             color: "green"
         }
+    },
+
+    Circles: {
+        first: {
+            x: margin_left + circle_radius + margin_circle + 15,
+            y: 120 + 25,
+            radius: 20,
+            color: "white"
+        },
+        second: {
+
+        },
+        third: {
+
+        }, 
+        forth: {
+
+        }
     }
 
 
@@ -133,6 +155,8 @@ export class Game extends Frame{
 
         this._buttons = [];
         this._frames = [];
+
+        this._circles = [];
         
     }
 
@@ -150,6 +174,31 @@ export class Game extends Frame{
         this._buttons[name] = newButton;
 
         return newButton;
+    }
+
+      // create button
+    createCircle(){
+
+        let B = jsonObjects.Circles['first'];
+
+        // new button 
+        let newButton = new CircleButton(B.x, B.y, B.radius, B.color);
+        
+        //console.log(newButton)
+        let temp = [];
+        // save to circles
+        for(var i = 0; i < 4; i++){
+            let xx = newButton._x + 50;
+             temp[i] = newButton;
+             temp[i]._x = xx;
+            
+            console.log(newButton)
+            console.log(temp[i])
+            console.log(temp)
+        }
+        
+        
+        return temp;
     }
 
 

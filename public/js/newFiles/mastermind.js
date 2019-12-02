@@ -68,21 +68,26 @@ function loop(){
             let checkButton = game.createButton('Check');
             checkButton.paintMe();
             game.canvas.addEventListener('click', checkButton.insideMe(checkButton, game));
-            
+
             game.state = 3;
             break;
         case 2: 
-            console.log('game')
-            console.log('attempt' + game._attempt)
+        
+            let C =  game.createCircle();
+            console.log(C)
+
+
+            for(var i = 0; i< 4 ; i++ ){
+                C[i].paintMe();
+            }
+
+            game.state = 3;
             break;
 
         case 3: 
             // 
-            game._frames['Screen'].paintFrame();
-            game._frames['Tips'].paintFrame();
-            game._frames['Attempts'].paintFrame();
-            game._frames['Attempt'].paintFrame();
-            game.state = 2;
+            
+            
             break;
         case 4: 
             // win
